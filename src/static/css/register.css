@@ -1,0 +1,497 @@
+/* Base Styles and Variables */
+:root {
+    --primary-color: #4f46e5;      /* Bright indigo */
+    --primary-hover: #4338ca;      /* Deeper indigo for hover states */
+    --secondary-color: #f43f5e;    /* Kept the vibrant pink */
+    --premium-color: #eab308;      /* Bright yellow/gold for premium features */
+    --premium-hover: #ca8a04;      /* Deeper gold for hover states */
+    --text-color: #111827;         /* Near black for main text */
+    --text-light: #4b5563;         /* Dark gray for secondary text */
+    --bg-color: #ffffff;           /* Pure white background */
+    --white: #f9fafb;              /* Off-white for content boxes */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --border-color: #e5e7eb;       /* Light gray for borders */
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+    --container-width: 1000px;     /* Kept your container width */
+}
+
+/* Hide scrollbars for all elements */
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hide webkit scrollbars */
+*::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.container {
+    max-width: var(--container-width);
+    width: 100%;
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    padding: 3rem 2rem;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Logo */
+.logo {
+    margin-bottom: 1.5rem;
+}
+
+.logo img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: brightness(1.2); /* Brighten logo for dark mode */
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* Plans Container */
+.plans-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Plan Cards */
+.plan-card {
+    flex: 1;
+    max-width: 350px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.free {
+    box-shadow: var(--shadow-sm);
+}
+
+.premium {
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--premium-color);
+}
+
+.popular-tag {
+    position: absolute;
+    top: 12px;
+    right: -30px;
+    background-color: var(--premium-color);
+    color: var(--white);
+    padding: 0.3rem 2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transform: rotate(45deg);
+    width: 150px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Plan Header */
+.plan-header {
+    padding: 1.5rem;
+    background-color: rgba(129, 140, 248, 0.1);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.premium .plan-header {
+    background-color: rgba(251, 191, 36, 0.1);
+}
+
+.plan-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.premium .price {
+    color: var(--premium-color);
+}
+
+.price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
+/* Plan Features */
+.plan-features {
+    padding: 1.5rem;
+}
+
+ul {
+    list-style: none;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+li i {
+    font-size: 1rem;
+}
+
+.fa-check {
+    color: #10b981;
+}
+
+.fa-times {
+    color: #ef4444;
+}
+
+.plan-note {
+    background-color: rgba(129, 140, 248, 0.1);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.plan-note i {
+    color: var(--primary-color);
+    margin-top: 3px;
+}
+
+.highlight {
+    background-color: rgba(251, 191, 36, 0.1);
+}
+
+.highlight i {
+    color: var(--premium-color);
+}
+
+/* Premium Button */
+.btn-premium-purchase {
+    width: 90%;
+    margin: 0 auto 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--premium-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-premium-purchase:hover {
+    background-color: var(--premium-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-premium-purchase.clicked {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+.btn-text {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PayPal Button Container */
+#paypal-button-container {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Back to Home Button */
+.btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-home:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Payment Success */
+.payment-success {
+    padding: 1.5rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.payment-success i {
+    font-size: 3rem;
+    color: #10b981;
+    margin-bottom: 1rem;
+}
+
+.payment-success h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.payment-success p {
+    color: var(--text-light);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+    .plans-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan-card {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1.5rem 1rem;
+        border-radius: 8px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .logo img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .plan-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .price {
+        font-size: 2rem;
+    }
+
+    .plan-note {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .btn-home {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ultra Premium Plan Variables */
+:root {
+    --ultra-premium-color: #1e3c72;    /* Deep blue for ultra-premium features */
+    --ultra-premium-hover: #2a5298;    /* Lighter blue for hover states */
+    --ultra-premium-bg: linear-gradient(135deg, #1e3c72, #2a5298); /* Gradient for card background */
+}
+
+/* Ultra Premium Plan Card */
+.plan-card.ultra-premium {
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--ultra-premium-color);
+    background: var(--ultra-premium-bg);
+    color: var(--white);
+}
+
+.plan-card.ultra-premium:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.ultra-premium .plan-header {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ultra-premium .price {
+    color: var(--white);
+}
+
+.ultra-premium .price span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.ultra-premium .plan-features {
+    color: var(--white);
+}
+
+.ultra-premium .plan-features li i.fa-check {
+    color: #34d399; /* Slightly lighter green for contrast on dark background */
+}
+
+.ultra-premium .plan-note {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.ultra-premium .plan-note i {
+    color: var(--white);
+}
+
+.ultra-premium .popular-tag {
+    background-color: var(--ultra-premium-color);
+    color: var(--white);
+}
+
+/* Ultra Premium Button */
+.btn-ultra-premium-purchase {
+    width: 90%;
+    margin: 0 auto 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--ultra-premium-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-ultra-premium-purchase:hover {
+    background-color: var(--ultra-premium-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-ultra-premium-purchase.clicked {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+/* Ultra Premium PayPal Button Container */
+#paypal-button-container-ultra {
+    padding: 0 1.5rem 1.5rem;
+}
+
+/* Responsive Adjustments for Ultra Premium */
+@media (max-width: 900px) {
+    .plan-card.ultra-premium {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .ultra-premium .plan-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .ultra-premium .price {
+        font-size: 2rem;
+    }
+
+    .ultra-premium .plan-note {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .btn-ultra-premium-purchase {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}

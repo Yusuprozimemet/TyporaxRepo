@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: typorax-app
+    runtime: docker
+    repo: https://github.com/Yusuprozimemet/TyporaX.git
+    branch: main
+    dockerfilePath: ./Dockerfile
+    region: oregon  # or singapore, ohio, frankfurt
+    plan: free  # or starter, standard, pro
+    healthCheckPath: /
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true  # Render will generate a secure secret key
+      - key: PORT
+        value: 10000  # Render's default port
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: GUNICORN_WORKERS
+        value: 2
+      - key: GUNICORN_TIMEOUT
+        value: 120
+    # Optional: Add persistent disk for database if needed
+    # disk:
+    #   name: typorax-data
+    #   mountPath: /data
+    #   sizeGB: 1

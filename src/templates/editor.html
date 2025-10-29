@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-6356149635027448">
+    <title id="page-title">TyporaX Markdown Editor</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/twemoji@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/TyporaX.png') }}">
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0WS75WQJ8"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q0WS75WQJ8');
+</script>
+
+<body>
+    <nav class="menu-bar">
+        <div class="menu-item typorax-title">
+            <img src="{{ url_for('static', filename='img/TyporaX.png') }}" alt="TyporaX Logo" class="logo">
+        </div>
+        <div id="highlight-buttons" class="menu-item">
+            <button class="fancy-button highlight-red" onclick="applyHighlight('red')"
+                aria-label="Highlight text in red">
+                <i class="fas fa-highlighter"></i>
+            </button>
+            <button class="fancy-button highlight-green" onclick="applyHighlight('green')"
+                aria-label="Highlight text in green">
+                <i class="fas fa-highlighter"></i>
+            </button>
+            <input type="color" id="custom-color" class="fancy-button custom-color"
+                onchange="applyHighlight(this.value)" aria-label="Select custom highlight color">
+            <button class="fancy-button remove-highlight" onclick="removeHighlight()" aria-label="Remove highlight">
+                <i class="fas fa-eraser"></i>
+            </button>
+        </div>
+        {% if session.username == 'tester' %}
+        <div id="menu-insert" class="menu-item">
+            <button class="fancy-button insert-image" onclick="triggerImageUpload()" aria-label="Insert image">
+                <i class="fas fa-camera"></i>
+            </button>
+        </div>
+        {% endif %}
+
+        <div id="font-settings" class="menu-item">
+            <select class="font-size-selector" onchange="changeFontSize(this.value)" aria-label="Select font size">
+                <option value="14">14px</option>
+                <option value="16" selected>16px</option>
+                <option value="18">18px</option>
+                <option value="20">20px</option>
+            </select>
+            <select class="font-style-selector" onchange="changeFontStyle(this.value)" aria-label="Select font style">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Palatino Linotype">Palatino Linotype</option>
+                <option value="Arial Narrow">Arial Narrow</option>
+                <option value="Calibri">Calibri</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Roboto">Roboto</option>
+            </select>
+        </div>
+
+        <div id="reading-emojis" class="menu-item">
+            <select class="emoji-selector" onchange="handleEmojiSelect(this.value)" aria-label="Select emoji">
+                <option value="😀">😀</option>
+                <option value="🔴">🔴</option>
+                <option value="🟡">🟡</option>
+                <option value="🟢">🟢</option>
+                <option value="⚪">⚪</option>
+                <option value="💡">💡</option>
+                <option value="⚠️">⚠️</option>
+                <option value="✅">✅</option>
+                <option value="🔊">🔊</option>
+                <option value="❌">❌</option>
+                <option value="❓">❓</option>
+                <option value="⭐">⭐</option>
+            </select>
+        </div>
+
+        <div class="menu-item">
+            <select class="formatting-selector" onchange="handleFormattingSelect(this.value)"
+                aria-label="Select formatting option">
+                <option value="" disabled selected>Format</option>
+                <option value="code"> Code</option>
+                <option value="bold-italic"> Bold & Italic</option>
+                <option value="underline"> Underline</option>
+                <option value="strikethrough"> Strikethrough</option>
+                <option value="bold"> Bold</option>
+                <option value="italic"> Italic</option>
+                <option value="left"> Left</option>
+                <option value="center"> Center</option>
+                <option value="right"> Right</option>
+            </select>
+        </div>
+
+        <div id="menu-toggle-preview" class="menu-item">
+            <label class="switch" aria-label="Toggle preview mode">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <span class="toggle-text"><i class="fas fa-edit"></i>/<i class="fas fa-eye"></i></span>
+        </div>
+
+        {% if user_type == 'premium' %}
+        <div id="menu-new-word" class="menu-item forward">
+            <button class="fancy-button new-word" onclick="newWord()" aria-label="Add new word">
+                <i class="fas fa-bookmark"></i>
+            </button>
+        </div>
+
+        <div id="menu-save-file" class="menu-item">
+            <button class="fancy-button save-file" onclick="saveFile()" aria-label="Save file">
+                <i class="fas fa-save"></i>
+            </button>
+        </div>
+
+        <div id="menu-practice" class="menu-item">
+            <button class="fancy-button practice-word" onclick="startPractice()" aria-label="Start typing practice">
+                <i class="fa-solid fa-keyboard"></i>
+            </button>
+        </div>
+        <div id="menu-progress" class="menu-item">
+            <button class="fancy-button progress" onclick="openProgressModal()" aria-label="View progress">
+                <i class="fas fa-chart-bar"></i>
+            </button>
+        </div>
+        <div id="menu-plot" class="menu-item">
+            <button class="fancy-button plot" onclick="openPlot()" aria-label="Open plot">
+                <i class="fas fa-chart-line"></i>
+            </button>
+        </div>
+        {% endif %}
+
+        <div id="progress-modal" class="progress-modal">
+            <div class="progress-modal-content">
+                <span class="progress-close-button" onclick="closeProgressModal()">×</span>
+                <h2>Evaluate your Learning Progress</h2>
+                <div id="progress-container">
+                    <!-- Steps with checkboxes and number inputs will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+        <div id="current-file-display" class="menu-item">
+            <span id="current-file-name">No file selected</span>
+        </div>
+        <div id="menu-manual" class="menu-item">
+            <button class="fancy-button manual" onclick="openManual()" aria-label="Open manual">
+                <i class="fas fa-book"></i>
+            </button>
+        </div>
+        <a href="{{ url_for('auth.selection') }}" class="menu-item logout-btn" aria-label="Log out">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </nav>
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="tabs">
+                <div id="tab-folders" class="tab">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div id="tab-files" class="tab active">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div id="tab-search" class="tab">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <div id="content-files" class="content active">
+                <div id="file-list"></div>
+            </div>
+            <div id="content-search" class="content">
+                <div class="search-input-wrapper">
+                    <input type="text" id="search-input" placeholder="Search files...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div id="search-results"></div>
+            </div>
+            <!-- HTML for folder management in content-folders div -->
+            <div id="content-folders" class="content">
+                <div id="folder-list"></div>
+                {% if user_type == 'premium' %}
+                <button id="folder-management-btn" class="btn btn-primary">Manage Folders</button>
+                {% endif %}
+            </div>
+
+        </aside>
+
+        <!-- Add a toggle button -->
+        <div class="sidebartoggle" id="sidebartoggle">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <main class="editor" id="editor" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+            <textarea id="markdown-editor" placeholder="🌟 Welcome to TyporaX! Please read the manual.🌟
+            Unleash your creativity and start crafting your words below.
+            Your blank canvas awaits—dive in and let your ideas flow! ✨✍️"></textarea>
+            <div id="markdown-preview" contenteditable="false" style="display: none;"></div>
+            <input type="file" id="image-upload" accept="image/*" style="display: none;">
+            <input type="file" id="fileInput" style="display: none;" />
+            <input type="hidden" id="current-filename">
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        {% if session.username == 'tester' %}
+        <div class="book-links">
+            <button id="manage-books"><i class="fas fa-edit"></i> Books</button>
+        </div>
+        {% else %}
+        <p>© 2025 TyporaX </p>
+        {% endif %}
+        <div class="button-group">
+            <button id="upgrade"><i class="fas fa-rocket"></i> Subscription</button>
+            <button id="audio-button"><i class="fas fa-music"></i> Audio</button>
+            {% if user_type == 'premium' %}
+            <button id="manage-sharing"> <i class="fas fa-share-alt"></i> Sharing</button>
+            <button id="send-button"><i class="fas fa-paper-plane"></i> Send Email</button>
+            <button id="word-order-practice"><i class="fas fa-sort-alpha-down"></i> Word Order</button>
+            <button id="fill-button"><i class="fas fa-pencil-alt"></i> Fill Blanks</button>
+            <button id="matching-practice"><i class="fas fa-puzzle-piece"></i> Matching</button>
+            <button id="schedule-button"><i class="fas fa-calendar-alt"></i> Schedule</button>
+            <button id="speech-recognition"><i class="fas fa-microphone"></i> Speaking</button>
+            <button id="speech-setup"><i class="fas fa-cog"></i> Speech Setup</button>
+            <button id="publish-button"><i class="fas fa-upload"></i> Publish</button>
+            {% endif %}
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.0/marked.min.js"></script>
+    <script src="/static/js/Search.js"></script>
+    <script src="/static/js/FileOperation.js"></script>
+    <script src="/static/js/TogglePreview.js"></script>
+    <script src="/static/js/Insert.js"></script>
+    <script src="/static/js/emoji.js"></script>
+    <script src="/static/js/emojisForReading.js"></script>
+    <script src="/static/js/Highlight.js"></script>
+    <script src="/static/js/newWord.js"></script>
+    <script src="/static/js/pronounce.js"></script>
+    <script src="/static/js/practice.js"></script>
+    <script src="/static/js/fillblanks.js"></script>
+    <script src="/static/js/mobile.js"></script>
+    <script src="/static/js/books.js"></script>
+    <script src="/static/js/sendemail.js"></script>
+    <script src="/static/js/matching.js"></script>
+    <script src="/static/js/wordorder.js"></script>
+    <script src="/static/js/progress.js"></script>
+    <script src="/static/js/schedule.js"></script>
+    <script src="/static/js/speechrecognition.js"></script>
+    <script src="/static/js/speechsetup.js"></script>
+    <script src="/static/js/audio.js"></script>
+    <script src="/static/js/manual.js"></script>
+    <script src="/static/js/profile.js"></script>
+    <script src="/static/js/sidebarToggle.js"></script>
+    <script src="/static/js/format.js"></script>
+    <script src="/static/js/fontsize.js"></script>
+    <script src="/static/js/plot.js"></script>
+    <script src="/static/js/upgrade.js"></script>
+    <script src="/static/js/foldermanagement.js"></script>
+    <script src="/static/js/sharing.js"></script>
+    <script src="/static/js/publish.js"></script>
+    <script src="/static/js/savefilebutton.js"></script>
+</body>
+
+</html>

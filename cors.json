@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["http://127.0.0.1:5000/", "https://typorax.onrender.com"],
+      "responseHeader": ["Content-Type", "Access-Control-Allow-Origin"],
+      "method": ["GET"],
+      "maxAgeSeconds": 3600
+    }
+  ]

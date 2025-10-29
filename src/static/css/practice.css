@@ -1,0 +1,1020 @@
+/* Base Colors and Theme Variables */
+:root {
+    /* Light Mode Colors - Improved contrast */
+    --body-bg: #f7f9fc;
+    --body-color: #2a2a2a; /* Darker text for better contrast */
+    --border-color: #ddd;
+    --card-bg: #ffffff; /* Pure white for better contrast */
+    --card-border: #eee;
+    --card-shadow: rgba(0, 0, 0, 0.08); /* Slightly stronger shadow */
+    --secondary-text: #555; /* Darker secondary text */
+    --secondary-bg: #e9ecef;
+    --primary-color: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --primary-active: #0a58ca;
+    --success-color: #198754;
+    --link-color: #0d6efd;
+    --link-hover: #0a58ca;
+    --keyword-bg: #fff4cd;
+    --keyword-color: #d35400;
+    --progress-bg: #eee;
+    --blank-border: #007bff;
+    --blank-color: #666; /* Darker for better visibility */
+    --flashcard-front: #f0f8ff;
+    --flashcard-front-text: #333;
+    --flashcard-back: #d4edda;
+    --flashcard-back-text: #155724;
+    --form-border: #ced4da;
+    --form-bg: #fff;
+    --form-focus: #80bdff;
+    --form-shadow: rgba(0, 123, 255, 0.25);
+    --toast-bg: #fff;
+    --toast-shadow: rgba(0, 0, 0, 0.15);
+    --modal-bg: #fff;
+    --slider-bg: #ccc;
+    --slider-active: #2196F3;
+    --slider-button: #fff;
+    --focus-outline: #80bdff;
+    --hover-transition: 0.2s ease-in-out; /* Global transition for hover effects */
+    --audio-card-bg: #ffffff;
+    --audio-card-border: #eee;
+    --audio-player-bg: #f7f9fc; /* Slightly lighter than body for distinction */
+    --audio-button-bg: #0d6efd; /* Matches primary-color */
+    --audio-button-hover: #0b5ed7;
+    --audio-button-text: #ffffff;
+    --audio-progress-bg: #e9ecef; /* Matches secondary-bg */
+    --audio-progress-fill: #0d6efd; /* Matches primary-color */
+    --audio-time-text: #2a2a2a; /* Matches body-color */
+    --audio-volume-slider: #0d6efd;
+}
+
+/* Dark Mode Colors - Improved for better contrast and readability */
+body.dark-mode {
+    --body-bg: #121620; /* Darker background for better contrast */
+    --body-color: #f0f0f0; /* Lighter text for better contrast */
+    --border-color: #444;
+    --card-bg: #1f2937; /* Different shade for better distinction */
+    --card-border: #444;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --secondary-text: #bbb; /* Lighter secondary text */
+    --secondary-bg: #333;
+    --primary-color: #3b9bff; /* More vibrant blue for dark mode */
+    --primary-hover: #68b0ff;
+    --primary-active: #4a99f7;
+    --success-color: #2da750;
+    --link-color: #3b9bff;
+    --link-hover: #68b0ff;
+    --keyword-bg: #413d26;
+    --keyword-color: #ffa559;
+    --progress-bg: #333;
+    --blank-border: #3b9bff;
+    --blank-color: #aaa; /* Lighter for better visibility */
+    --flashcard-front: #2a3b4c;
+    --flashcard-front-text: #f0f0f0;
+    --flashcard-back: #294632;
+    --flashcard-back-text: #d4edda;
+    --form-border: #555;
+    --form-bg: #2a2e35; /* Slightly lighter than background for contrast */
+    --form-focus: #6c9ad8;
+    --form-shadow: rgba(108, 154, 216, 0.25);
+    --toast-bg: #2a2e35;
+    --toast-shadow: rgba(0, 0, 0, 0.25);
+    --modal-bg: #1f2937;
+    --slider-bg: #555;
+    --slider-active: #3b9bff;
+    --slider-button: #fff;
+    --focus-outline: #6c9ad8;
+    --audio-card-bg: #1f2937;
+    --audio-card-border: #444;
+    --audio-player-bg: #121620; /* Matches body-bg for consistency */
+    --audio-button-bg: #3b9bff; /* Matches primary-color */
+    --audio-button-hover: #68b0ff;
+    --audio-button-text: #ffffff;
+    --audio-progress-bg: #333; /* Matches secondary-bg */
+    --audio-progress-fill: #3b9bff; /* Matches primary-color */
+    --audio-time-text: #f0f0f0; /* Matches body-color */
+    --audio-volume-slider: #3b9bff;
+}
+
+/* Main Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    padding-bottom: 60px; /* Increased padding for more breathing room */
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--body-bg);
+    color: var(--body-color);
+    font-size: 16px; /* Base font size */
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 15px; /* Added horizontal padding */
+}
+
+/* Practice Title Styling */
+.practice-title {
+    color: var(--body-color); /* Main text color for both light and dark modes */
+}
+
+/* Practice Description Styling */
+.practice-description {
+    color: var(--secondary-text); /* Secondary text color for both light and dark modes */
+}
+
+/* Logo and Header */
+.logo {
+    height: 44px; /* Slightly larger */
+    width: auto;
+    margin-right: 12px;
+}
+
+.typorax-title {
+    display: flex;
+    align-items: center;
+    font-size: 26px; /* Larger title */
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* Theme Toggle - Improved for better interaction */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px; /* Larger for better interaction */
+    height: 30px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--slider-bg);
+    transition: .3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px; /* Larger toggle button */
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--slider-button);
+    transition: .3s;
+}
+
+input:checked + .slider {
+    background-color: var(--slider-active);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 0 3px var(--form-shadow); /* Better focus state */
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+.slider.round {
+    border-radius: 30px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.toggle-text {
+    margin-left: 10px;
+    vertical-align: middle;
+    font-weight: 500; /* Make text more prominent */
+}
+
+#menu-toggle-theme {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 5px 0;
+}
+
+/* Navigation and Tab Styling - Enhanced for better usability */
+.nav-tabs {
+    margin-top: 25px;
+    border-bottom: 2px solid var(--border-color); /* Thicker border */
+    gap: 5px; /* Space between tabs */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: var(--secondary-text);
+    font-weight: 600; /* Bolder text */
+    padding: 12px 18px; /* Larger clickable area */
+    border-radius: 8px 8px 0 0; /* Rounder top corners */
+    transition: all var(--hover-transition);
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+    background-color: rgba(13, 110, 253, 0.05); /* Subtle hover effect */
+}
+
+.nav-link.active {
+    color: var(--primary-color);
+    background-color: transparent;
+    border-color: var(--border-color) var(--border-color) var(--body-bg);
+}
+
+.nav-link.active:after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px 3px 0 0;
+}
+
+.nav-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--form-shadow);
+}
+
+.practice-section {
+    padding: 25px 0;
+}
+
+/* Cards Styling - Improved for better visual hierarchy */
+.sentence-card, .chunk-card, .reverse-card, .spaced-card {
+    background-color: var(--card-bg);
+    border-radius: 12px; /* Rounder corners */
+    padding: 20px; /* More padding */
+    margin-bottom: 20px; /* More space between cards */
+    box-shadow: 0 3px 10px var(--card-shadow); /* Enhanced shadow */
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--card-border);
+}
+
+.sentence-card:hover, .chunk-card:hover, .reverse-card:hover, .spaced-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px var(--card-shadow);
+}
+
+.dutch-sentence, .chunk-text, .english-text {
+    font-size: 19px; /* Larger text */
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.english-translation, .original-sentence {
+    font-size: 17px;
+    color: var(--secondary-text);
+    font-style: italic;
+    padding: 10px 0;
+    border-top: 1px solid var(--card-border);
+    margin-top: 10px;
+}
+
+.role-label {
+    display: inline-block;
+    font-size: 13px;
+    background-color: var(--secondary-bg);
+    color: var(--secondary-text);
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.action-buttons {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Consistent spacing */
+    align-items: center;
+}
+
+/* Keyword Highlighting - Enhanced */
+.keyword {
+    background-color: var(--keyword-bg);
+    padding: 2px 5px; /* More padding */
+    border-radius: 4px;
+    font-weight: bold;
+    color: var(--keyword-color);
+    transition: background-color 0.2s;
+}
+
+.keyword:hover {
+    background-color: rgba(255, 250, 205, 0.8); /* Subtle hover effect */
+}
+
+/* Badge Styling - Enhanced */
+.badge-mastered {
+    margin-left: 10px;
+    vertical-align: middle;
+    font-size: 12px;
+    padding: 5px 10px;
+    animation: fadeIn 0.5s;
+    border-radius: 20px; /* Fully rounded */
+}
+
+/* Fill in the Blanks - Improved */
+.blank {
+    display: inline-block;
+    min-width: 100px; /* Wider for better interaction */
+    border-bottom: 2px solid var(--blank-border);
+    text-align: center;
+    margin: 0 4px;
+    color: var(--blank-color);
+    padding: 0 5px 2px 5px;
+    transition: border-color 0.2s;
+}
+
+.blank:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Progress Bar - Enhanced */
+.progress {
+    height: 12px; /* Taller */
+    margin-bottom: 25px;
+    border-radius: 6px;
+    background-color: var(--progress-bg);
+    overflow: hidden; /* Ensure the progress stays within bounds */
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Difficulty Rating - Enhanced */
+.difficulty-rating {
+    padding-top: 12px;
+    border-top: 1px solid var(--card-border);
+    margin-top: 15px;
+}
+
+.difficulty-btn {
+    margin-right: 10px;
+    padding: 8px 15px;
+    border-radius: 20px; /* Fully rounded buttons */
+    transition: all var(--hover-transition);
+}
+
+/* Feedback System - Enhanced */
+.feedback {
+    padding: 8px 0;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/* Flashcards - Enhanced for better interaction */
+.flashcard {
+    height: 220px; /* Taller */
+    perspective: 1000px;
+    margin-bottom: 25px;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s; /* Slightly slower for better effect */
+    transform-style: preserve-3d;
+    cursor: pointer; /* Indicate clickable */
+}
+
+.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px var(--card-shadow);
+    text-align: center;
+}
+
+.flashcard-front {
+    background-color: var(--flashcard-front);
+    color: var(--flashcard-front-text);
+}
+
+.flashcard-back {
+    background-color: var(--flashcard-back);
+    color: var(--flashcard-back-text);
+    transform: rotateY(180deg);
+}
+
+/* Form Controls - Enhanced for better interaction */
+.form-select, .form-control {
+    border: 1px solid var(--form-border);
+    border-radius: 8px; /* Rounder corners */
+    padding: 10px 15px; /* More padding */
+    background-color: var(--form-bg);
+    color: var(--body-color);
+    transition: all var(--hover-transition);
+    font-size: 16px; /* Larger text */
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: var(--form-focus);
+    outline: 0;
+    box-shadow: 0 0 0 3px var(--form-shadow);
+}
+
+.form-select:hover,
+.form-control:hover {
+    border-color: var(--primary-hover);
+}
+
+/* Buttons - Enhanced for better interaction */
+.btn {
+    padding: 10px 16px; /* Larger buttons */
+    border-radius: 8px; /* Rounder corners */
+    font-weight: 500;
+    transition: all var(--hover-transition);
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 3px var(--form-shadow);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-active);
+    transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-outline-success {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-outline-success:hover {
+    color: #fff;
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-success:active {
+    transform: translateY(0);
+}
+
+.btn-link {
+    color: var(--link-color);
+    text-decoration: none;
+    padding: 5px 8px; /* Some padding for larger hit area */
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+    color: var(--link-hover);
+    background-color: rgba(13, 110, 253, 0.05); /* Subtle background on hover */
+    border-radius: 4px;
+}
+
+/* Toast Notifications - Enhanced */
+.toast {
+    background-color: var(--toast-bg);
+    box-shadow: 0 0.5rem 1.5rem var(--toast-shadow);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.toast-header {
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 15px;
+}
+
+.toast-body {
+    padding: 15px;
+}
+
+/* Modal Styling - Enhanced */
+.modal-content {
+    border-radius: 12px;
+    background-color: var(--modal-bg);
+    color: var(--body-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border-color);
+    padding: 15px 20px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fadeIn {
+    animation: fadeIn 0.5s;
+}
+
+/* Stats Section - Enhanced */
+#statsSection {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 3px 10px var(--card-shadow);
+}
+
+/* User Answer Input for Quiz Mode - Enhanced */
+.user-answer-container {
+    margin: 15px 0;
+}
+
+.user-answer {
+    border: 1px solid var(--form-border);
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+    background-color: var(--form-bg);
+    color: var(--body-color);
+    font-size: 16px;
+    transition: all var(--hover-transition);
+}
+
+.user-answer:focus {
+    border-color: var(--form-focus);
+    outline: 0;
+    box-shadow: 0 0 0 3px var(--form-shadow);
+}
+
+/* Accessibility enhancements */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus visible styles for keyboard navigation */
+:focus-visible {
+    outline: 3px solid var(--focus-outline);
+    outline-offset: 2px;
+}
+
+/* Additional styles for flashcards feature */
+#flashcardList {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.flashcard-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.flashcard-status {
+    font-size: 14px;
+    color: var(--secondary-text);
+    margin-top: 8px;
+}
+
+/* Loading spinner - Enhanced */
+.loading-spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(0, 123, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Add a helper class for sticky headers */
+.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--body-bg);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Add tooltip styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--card-bg);
+    color: var(--body-color);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: 0 2px 8px var(--card-shadow);
+    border: 1px solid var(--border-color);
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Media Queries for Responsiveness - Enhanced */
+@media (max-width: 768px) {
+    body {
+        font-size: 15px; /* Slightly smaller on tablets */
+    }
+
+    .dutch-sentence, .chunk-text, .english-text {
+        font-size: 17px;
+    }
+    
+    .action-buttons {
+        flex-direction: row; /* Keep buttons in a row if possible */
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+    
+    .action-buttons button {
+        margin-bottom: 0;
+    }
+    
+    .flashcard {
+        height: 180px;
+    }
+
+    .btn {
+        /* Ensure touch-friendly sizes */
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        font-size: 14px; /* Smaller base font on mobile */
+        padding-bottom: 80px; /* More padding at bottom for mobile */
+    }
+
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+    }
+    
+    .nav-link {
+        padding: 10px 12px;
+        font-size: 14px;
+        width: 100%; /* Full width tabs on mobile */
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .nav-tabs {
+        flex-direction: column;
+        border-bottom: none;
+    }
+
+    .sentence-card, .chunk-card, .reverse-card, .spaced-card {
+        padding: 15px;
+    }
+
+    .dutch-sentence, .chunk-text, .english-text {
+        font-size: 16px;
+    }
+
+    .action-buttons {
+        flex-direction: column; /* Stack buttons on very small screens */
+        align-items: stretch;
+    }
+
+    .action-buttons button {
+        margin-bottom: 8px;
+        width: 100%;
+    }
+
+    .btn {
+        padding: 12px 16px; /* Larger touch targets on mobile */
+    }
+
+    .form-select, .form-control {
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 12px;
+    }
+
+    /* Fix for iOS input zoom */
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background-color: #fff;
+        color: #000;
+    }
+
+    .container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .sentence-card, .chunk-card, .reverse-card, .spaced-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+
+/* Audio Player Enhancements */
+.audio-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--card-shadow);
+    transition: box-shadow var(--hover-transition);
+}
+
+.audio-card:hover {
+    box-shadow: 0 6px 16px var(--card-shadow);
+}
+
+/* Audio Player Container */
+.audio-player {
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+}
+
+/* Player Controls */
+.player-controls {
+    gap: 0.5rem; /* Improved spacing between buttons */
+}
+
+.player-controls .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color var(--hover-transition), transform var(--hover-transition);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem; /* Space between icon and text */
+}
+
+.player-controls .btn:hover {
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.player-controls .btn:focus {
+    outline: 2px solid var(--focus-outline);
+    outline-offset: 2px;
+}
+
+/* Specific Button Styles */
+#playPauseBtn {
+    background: var(--audio-button-bg);
+    color: var(--audio-button-text);
+}
+
+#playPauseBtn:hover {
+    background: var(--audio-button-hover);
+}
+
+#backwardBtn, #stopBtn, #replayBtn {
+    background: var(--secondary-bg);
+    color: var(--body-color);
+}
+
+#backwardBtn:hover, #stopBtn:hover, #replayBtn:hover {
+    background: var(--secondary-text);
+    color: var(--body-bg);
+}
+
+#saveBtn {
+    background: var(--success-color);
+    color: var(--audio-button-text);
+}
+
+#saveBtn:hover {
+    background: var(--success-color);
+    filter: brightness(1.1); /* Brighten on hover */
+}
+
+#downloadBtn {
+    background: var(--audio-button-bg);
+    color: var(--audio-button-text);
+}
+
+#downloadBtn:hover {
+    background: var(--audio-button-hover);
+}
+
+/* Volume Slider */
+.volume-container {
+    position: relative;
+}
+
+#volumeSlider {
+    cursor: pointer;
+    transition: background-color var(--hover-transition);
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    background: var(--audio-volume-slider);
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+#volumeSlider::-moz-range-thumb {
+    background: var(--audio-volume-slider);
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+#volumeSlider:focus {
+    outline: 2px solid var(--focus-outline);
+}
+
+/* Progress Bar */
+#progressBarContainer {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: background-color var(--hover-transition);
+}
+
+#progressBar {
+    transition: width 0.1s linear; /* Smooth progress update */
+    background: var(--audio-progress-fill);
+}
+
+#progressBarContainer:hover {
+    background: var(--audio-progress-bg);
+    filter: brightness(1.05); /* Subtle highlight on hover */
+}
+
+/* Time Display */
+.time-display {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--audio-time-text);
+}
+
+/* Form Elements */
+.form-select, .form-control {
+    border-radius: 6px;
+    transition: border-color var(--hover-transition), box-shadow var(--hover-transition);
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: var(--form-focus);
+    box-shadow: 0 0 0 0.2rem var(--form-shadow);
+}
+
+/* Transcription Input */
+#transcriptionInput {
+    resize: vertical; /* Allow vertical resizing only */
+    min-height: 100px;
+}
+
+/* Accessibility Improvements */
+:focus-visible {
+    outline: 2px solid var(--focus-outline);
+    outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .player-controls {
+        flex-wrap: wrap; /* Stack buttons on small screens */
+        gap: 0.75rem;
+    }
+
+    .player-controls .btn {
+        flex: 1 1 45%; /* Buttons take up roughly half the width */
+        justify-content: center;
+    }
+
+    .volume-container {
+        flex: 1 1 100%; /* Volume slider takes full width */
+        justify-content: center;
+    }
+
+    #volumeSlider {
+        width: 100%;
+    }
+
+    .time-display {
+        font-size: 0.8rem;
+    }
+}
+
+/* Dark Mode Adjustments */
+body.dark-mode .player-controls .btn {
+    border: 1px solid var(--card-border); /* Subtle border for better definition */
+}
+
+body.dark-mode #progressBarContainer:hover {
+    filter: brightness(1.2); /* Brighter hover effect in dark mode */
+}
+
+body.dark-mode .form-select, body.dark-mode .form-control {
+    background: var(--form-bg);
+    color: var(--body-color);
+}
+
+/* Logout Button Styles */
+.logout-btn {
+    background-color: transparent; /* No background color */
+    color: #000; /* Text color (adjust as needed) */
+    border: none; /* No border */
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none; /* Remove underline from link */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Aligns the icon and text vertically */
+}
+
+.logout-btn i {
+    margin-right: 8px; /* Adds space between the icon and text */
+    color: #dc3545; /* Red color for the icon */
+    font-size: 1.5em; /* Larger icon size */
+}

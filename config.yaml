@@ -1,0 +1,9 @@
+# Email configuration has been moved to environment variables (.env file)
+# Configure the following in your .env file:
+# MAIL_SERVER=smtp.gmail.com
+# MAIL_PORT=587
+# MAIL_USE_TLS=True
+# MAIL_USERNAME=your-email@gmail.com
+# MAIL_PASSWORD=your-app-password
+
+# Add other non-sensitive configuration here if needed

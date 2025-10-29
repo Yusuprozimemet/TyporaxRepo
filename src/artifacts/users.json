@@ -1,0 +1,19 @@
+[
+    {
+        "email": "typorax@gmail.com",
+        "username": "admin",
+        "password": "admin123!",
+        "user_type": "admin",
+        "language_preference": "dutch"
+    },
+    {
+        "email": "tester@example.com",
+        "username": "tester",
+        "password": "tester1234!",
+        "user_type": "premium",
+        "subscription_start_date": "2025-04-30T00:00:00Z",
+        "next_billing_date": "2025-05-30T00:00:00Z",
+        "is_canceled": false,
+        "language_preference": "dutch"
+    }
+]

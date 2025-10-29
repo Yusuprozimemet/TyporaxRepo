@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-6356149635027448">
+    <title>Public Files Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/TyporaX.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/public.css') }}">
+
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0WS75WQJ8"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q0WS75WQJ8');
+</script>
+
+<body>
+    <div class="container fade-in">
+        <header>
+            <a href="/" class="btn-home"><i class="fas fa-home"></i> Back to Home</a>
+            {% if is_authenticated %}
+            <a href="{{ url_for('auth.logout') }}" class="btn logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            {% endif %}
+        </header>
+
+        {% if files %}
+        <h1><i class="fas fa-folder-open"></i> Public Files Hub</h1>
+        <p class="subheading">Browse and access shared documents from our community</p>
+
+        {% if is_admin %}
+        <div class="admin-controls">
+            <button id="clear-public-button" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i> Clear All Public Files
+            </button>
+        </div>
+        {% endif %}
+
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search by title or tags..." />
+            <button id="search-button" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+        </div>
+
+        <div class="file-list">
+            {% for file in files %}
+            <div class="file-item" data-public-id="{{ file.public_id }}"
+                data-content="{{ file.content | e | truncate(200) | safe }}">
+                <div class="file-item-main">
+                    <i class="fas fa-file-alt file-icon"></i>
+                    <div class="file-details">
+                        <span class="file-name">{{ file.display_filename }}</span>
+                        <span class="file-author">by {{ file.display_username }}</span>
+                        {% if file.tags %}
+                        <div class="file-tags">
+                            {% for tag in file.tags %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right file-action"></i>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <h1><i class="fas fa-file-alt"></i> {{ display_filename }}</h1>
+        <div class="file-meta">
+            <div><i class="fas fa-user"></i> {{ display_username }}</div>
+        </div>
+
+        <div class="content" id="markdown-preview"></div>
+
+        <div class="comments-section" id="comments-section">
+            <h3><i class="fas fa-comments"></i> Comments</h3>
+            <div id="comments-list"></div>
+        </div>
+
+        <div class="file-actions">
+            {% if is_owner or can_edit %}
+            <button id="edit-button" class="btn btn-primary" data-public-id="{{ public_id }}">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+            {% endif %}
+            {% if is_owner %}
+            <button id="permissions-button" class="btn btn-primary" data-public-id="{{ public_id }}">
+                <i class="fas fa-users-cog"></i> Manage Permissions
+            </button>
+            <button id="unpublish-button" class="btn btn-danger" data-public-id="{{ public_id }}">
+                <i class="fas fa-trash-alt"></i> Unpublish
+            </button>
+            {% endif %}
+            {% if is_authenticated %}
+            <button id="comment-button" class="btn btn-comment" data-public-id="{{ public_id }}">
+                <i class="fas fa-comment"></i> Comment
+            </button>
+            {% endif %}
+            {% if is_admin %}
+            <button id="clear-public-button" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i> Clear All Files
+            </button>
+            {% endif %}
+        </div>
+
+        <a href="/public/view" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Public Files
+        </a>
+        {% endif %}
+        {% if not files and not content %}
+        <h1><i class="fas fa-folder-open"></i> Public Files Hub</h1>
+        <p class="subheading">Browse and access shared documents from our community</p>
+
+        {% if is_admin %}
+        <div class="admin-controls">
+            <button id="clear-public-button" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i> Clear All Public Files
+            </button>
+        </div>
+        {% endif %}
+
+        <div class="no-files">
+            <i class="fas fa-folder-open"></i>
+            <p>No public files available yet.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Edit Modal -->
+    <!-- Update Edit Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit File</h2>
+                <span class="close-modal">×</span>
+            </div>
+            <div class="input-group">
+                <label for="edit-content">Content (Markdown)</label>
+                <textarea id="edit-content" placeholder="Enter updated markdown content"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="edit-tags">Tags (comma-separated)</label>
+                <input type="text" id="edit-tags" placeholder="e.g., guide, tutorial, tech">
+            </div>
+            <div class="input-group">
+                <button id="save-edit-button" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment Modal -->
+    <div id="comment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Comment</h2>
+                <span class="close-modal">×</span>
+            </div>
+            <div class="input-group">
+                <label for="comment-text">Your Comment</label>
+                <textarea id="comment-text" placeholder="Enter your comment"></textarea>
+            </div>
+            <div class="input-group">
+                <button id="submit-comment-button" class="btn btn-comment"><i class="fas fa-comment"></i> Submit
+                    Comment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permissions Modal -->
+    <div id="permissions-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Manage Edit Permissions</h2>
+                <span class="close-modal">×</span>
+            </div>
+            <div class="input-group">
+                <label for="add-permission-username">Add User (Enter Username)</label>
+                <input type="text" id="add-permission-username" placeholder="Enter username">
+                <button id="add-permission-button" class="btn btn-primary" style="margin-top: 10px;">
+                    <i class="fas fa-user-plus"></i> Add Permission
+                </button>
+            </div>
+            <div class="permissions-list" id="permissions-list">
+                <!-- Dynamically populated with permitted users -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/editcomment.js"></script>
+    <script>
+        // Set marked options for consistency with editor
+        marked.setOptions({ gfm: true, breaks: true });
+
+        // Store the raw markdown content in a variable that's accessible to JavaScript
+        const rawMarkdown = `{{ content | safe }}`;
+
+        // Render content if available
+        const previewElement = document.getElementById('markdown-preview');
+        if (rawMarkdown && previewElement) {
+            previewElement.innerHTML = marked.parse(rawMarkdown);
+        }
+
+        // Handle file item clicks
+        document.querySelectorAll('.file-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const publicId = item.getAttribute('data-public-id');
+                window.location.href = `/public/view/${publicId}`;
+            });
+        });
+
+        // Handle unpublish button
+        const unpublishButton = document.getElementById('unpublish-button');
+        if (unpublishButton) {
+            unpublishButton.addEventListener('click', () => {
+                const publicId = unpublishButton.getAttribute('data-public-id');
+                if (confirm('Are you sure you want to unpublish this file?')) {
+                    fetch(`/public/unpublish/${publicId}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.success) {
+                                alert('File unpublished successfully');
+                                window.location.href = '/public/view';
+                            } else {
+                                alert(`Unpublish failed: ${result.error}`);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error unpublishing file:', error);
+                            alert('Unpublish operation failed');
+                        });
+                }
+            });
+        }
+
+        // Handle clear public files button
+        const clearPublicButton = document.getElementById('clear-public-button');
+        if (clearPublicButton) {
+            clearPublicButton.addEventListener('click', () => {
+                if (confirm('Are you sure you want to clear ALL public files? This action cannot be undone.')) {
+                    fetch('/public/clear_public_files', {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.success) {
+                                alert('All public files cleared successfully');
+                                window.location.reload();
+                            } else {
+                                alert(`Clear public files failed: ${result.error}`);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error clearing public files:', error);
+                            alert('Clear public files operation failed');
+                        });
+                }
+            });
+        }
+    </script>
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const fileItems = document.querySelectorAll('.file-item');
+
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            fileItems.forEach(item => {
+                const title = item.querySelector('.file-name').textContent.toLowerCase();
+                const content = item.getAttribute('data-content').toLowerCase();
+                const tags = item.querySelectorAll('.file-tags .tag');
+                const tagMatch = Array.from(tags).some(tag => tag.textContent.toLowerCase().includes(query));
+                if (query === '') {
+                    item.style.display = 'flex';
+                } else if (title.includes(query) || content.includes(query) || tagMatch) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        if (searchButton) {
+            searchButton.addEventListener('click', performSearch);
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', performSearch);
+        }
+    </script>
+</body>
+
+</html>

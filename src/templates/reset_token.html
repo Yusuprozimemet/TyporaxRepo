@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-6356149635027448">
+    <title>Reset Your Password - TyporaX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 0 20px;
+        }
+        
+        .reset-form {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            position: relative;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-container img {
+            width: 70px;
+            height: auto;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group input:focus {
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+            outline: none;
+        }
+        
+        .password-strength {
+            height: 5px;
+            background-color: #f0f0f0;
+            margin-top: 8px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .reset-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-top: 0.5rem;
+        }
+        
+        .reset-btn:hover {
+            background-color: #3a56d4;
+        }
+        
+        .reset-btn:disabled {
+            background-color: #a0a0a0;
+            cursor: not-allowed;
+        }
+        
+        .back-to-login {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .back-to-login a {
+            color: #4361ee;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .back-to-login a:hover {
+            text-decoration: underline;
+        }
+        
+        .password-hints {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        
+        .password-hints ul {
+            margin: 0.5rem 0 0 1.25rem;
+            padding: 0;
+        }
+        
+        .password-hints li {
+            margin-bottom: 0.25rem;
+            color: #666;
+        }
+        
+        .password-hints li.valid {
+            color: #4CAF50;
+        }
+        
+        .custom-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 350px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+        
+        .custom-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .custom-notification.success {
+            background-color: #4CAF50;
+            border-left: 5px solid #2E7D32;
+        }
+        
+        .custom-notification.error {
+            background-color: #F44336;
+            border-left: 5px solid #C62828;
+        }
+        
+        .custom-notification .notification-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .custom-notification .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0WS75WQJ8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Q0WS75WQJ8');
+</script>
+<body>
+    <div class="container">
+        <div class="reset-form">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='img/TyporaX.png') }}" alt="TyporaX Logo">
+            </div>
+            <h2>Reset Your Password</h2>
+            <form action="{{ url_for('auth.reset_token', token=token) }}" method="post" id="passwordResetForm">
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Enter new password" required>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-check-circle"></i>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+                </div>
+                
+                <div class="password-hints">
+                    <p>Your password should:</p>
+                    <ul>
+                        <li id="length-check">Be at least 8 characters long</li>
+                        <li id="uppercase-check">Include at least one uppercase letter</li>
+                        <li id="lowercase-check">Include at least one lowercase letter</li>
+                        <li id="number-check">Include at least one number</li>
+                        <li id="match-check">Passwords must match</li>
+                    </ul>
+                </div>
+                
+                <button type="submit" class="reset-btn" id="resetButton" disabled>Reset Password</button>
+            </form>
+            
+            <div class="back-to-login">
+                <a href="{{ url_for('auth.login') }}">Back to Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const confirmInput = document.getElementById('confirm_password');
+            const strengthBar = document.getElementById('passwordStrengthBar');
+            const resetButton = document.getElementById('resetButton');
+            
+            // Password check elements
+            const lengthCheck = document.getElementById('length-check');
+            const uppercaseCheck = document.getElementById('uppercase-check');
+            const lowercaseCheck = document.getElementById('lowercase-check');
+            const numberCheck = document.getElementById('number-check');
+            const matchCheck = document.getElementById('match-check');
+            
+            // Custom notification function
+            function showCustomNotification(message, type = 'info') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `custom-notification ${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <span>${message}</span>
+                        <button class="notification-close">&times;</button>
+                    </div>
+                `;
+                
+                // Add to document
+                document.body.appendChild(notification);
+                
+                // Show with animation
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                // Handle close button
+                notification.querySelector('.notification-close').addEventListener('click', () => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                });
+                
+                // Auto-dismiss after 5 seconds
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        notification.classList.remove('show');
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 300);
+                    }
+                }, 5000);
+            }
+            
+            function validatePassword() {
+                const password = passwordInput.value;
+                const confirmPassword = confirmInput.value;
+                
+                // Check password requirements
+                const hasLength = password.length >= 8;
+                const hasUppercase = /[A-Z]/.test(password);
+                const hasLowercase = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const passwordsMatch = password === confirmPassword && password !== '';
+                
+                // Update checklist
+                lengthCheck.className = hasLength ? 'valid' : '';
+                uppercaseCheck.className = hasUppercase ? 'valid' : '';
+                lowercaseCheck.className = hasLowercase ? 'valid' : '';
+                numberCheck.className = hasNumber ? 'valid' : '';
+                matchCheck.className = passwordsMatch ? 'valid' : '';
+                
+                // Calculate strength
+                let strength = 0;
+                if (hasLength) strength += 25;
+                if (hasUppercase) strength += 25;
+                if (hasLowercase) strength += 25;
+                if (hasNumber) strength += 25;
+                
+                // Update strength bar
+                strengthBar.style.width = strength + '%';
+                
+                // Set color based on strength
+                if (strength < 50) {
+                    strengthBar.style.backgroundColor = '#ff4444';
+                } else if (strength < 75) {
+                    strengthBar.style.backgroundColor = '#ffbb33';
+                } else {
+                    strengthBar.style.backgroundColor = '#00C851';
+                }
+                
+                // Enable/disable button
+                resetButton.disabled = !(hasLength && hasUppercase && hasLowercase && hasNumber && passwordsMatch);
+            }
+            
+            // Add input event listeners
+            passwordInput.addEventListener('input', validatePassword);
+            confirmInput.addEventListener('input', validatePassword);
+            
+            // Form submission handler
+            document.getElementById('passwordResetForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const password = passwordInput.value;
+                const confirmPassword = confirmInput.value;
+                
+                if (password !== confirmPassword) {
+                    showCustomNotification('Passwords do not match. Please try again.', 'error');
+                    return;
+                }
+                
+                if (password.length < 8) {
+                    showCustomNotification('Password must be at least 8 characters long.', 'error');
+                    return;
+                }
+                
+                // If validation passes, submit the form
+                this.submit();
+            });
+        });
+    </script>
+</body>
+</html>

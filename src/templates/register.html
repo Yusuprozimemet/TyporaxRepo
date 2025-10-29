@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-6356149635027448">
+    <title>Register - TyporaX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/TyporaX.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Add particles canvas styles */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* Make sure the content is still visible */
+        .container {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0WS75WQJ8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Q0WS75WQJ8');
+</script>
+
+<body>
+    <!-- Particles.js container -->
+    <div id="particles-js"></div>
+    
+    <div class="container">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/TyporaX.png') }}" alt="TyporaX Logo">
+        </div>
+        <h2>Choose Your TyporaX Plan</h2>
+
+        <div class="plans-container">
+            <div class="plan-card free">
+                <div class="plan-header">
+                    <h3>Free Plan</h3>
+                    <div class="price">€0<span>/month</span></div>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Real-time Markdown Preview</li>
+                        <li><i class="fas fa-check"></i> Search Functionality (File Search)</li>
+                        <li><i class="fas fa-check"></i> Custom Themes (Light/Dark Mode)</li>
+                        <li><i class="fas fa-check"></i> Audio Playback Support</li>
+                        <li><i class="fas fa-check"></i> Practice Page Access (Sentence Practice, Fill in the Blanks,
+                            Reverse Practice, Listening Practice, Flashcards)</li>
+                    </ul>
+                    <div class="plan-note">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Free version offers basic Markdown editing and learning tools with limited storage duration,
+                            ideal for casual users.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plan-card premium">
+                <div class="popular-tag">Recommended</div>
+                <div class="plan-header">
+                    <h3>Premium Plan</h3>
+                    <div class="price">€20<span>/month</span></div>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li><i class="fas fa-check"></i> All Free Plan Features</li>
+                        <li><i class="fas fa-check"></i> Permanent File Storage</li>
+                        <li><i class="fas fa-check"></i> Code Syntax Highlighting</li>
+                        <li><i class="fas fa-check"></i> Text Highlighting (Red, Green, Custom Colors)</li>
+                        <li><i class="fas fa-check"></i> File Management (Create, Open, Edit)</li>
+                        <li><i class="fas fa-check"></i> Emoji Support for Reading & Editing</li>
+                        <li><i class="fas fa-check"></i> New Word Bookmarking</li>
+                        <li><i class="fas fa-check"></i> Formatting Options (Bold, Italic, Alignment, etc.)</li>
+                        <li><i class="fas fa-check"></i> Font Size & Style Customization</li>
+                        <li><i class="fas fa-check"></i> Advanced Learning Tools (Typing Practice, Word Order, Fill
+                            Blanks, Matching)</li>
+                        <li><i class="fas fa-check"></i> Speech Setup Customization</li>
+                        <li><i class="fas fa-check"></i> Speech Recognition (OpenAI Whisper Integration)</li>
+                        <li><i class="fas fa-check"></i> Schedule Integration (Calendar Features)</li>
+                        <li><i class="fas fa-check"></i> Detailed Progress Tests For Each Lesson</li>
+                        <li><i class="fas fa-check"></i> Detailed Progress Tracking Plot</li>
+                        <li><i class="fas fa-check"></i> Default Book Linking </li>
+                        <li><i class="fas fa-check"></i> Image Upload & Insertion</li>
+                        <li><i class="fas fa-check"></i> Direct Email Integration (Send Email with Attachments)</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                    </ul>
+                    <div class="plan-note highlight">
+                        <i class="fas fa-star"></i>
+                        <p>Unlock advanced learning tools, unlimited storage, and premium features like speech
+                            recognition and book linking for serious writers and learners.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plan-card ultra-premium">
+                <div class="popular-tag">Exclusive</div>
+                <div class="plan-header">
+                    <h3>Ultra Premium Plan</h3>
+                    <div class="price">€50<span>/month</span></div>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li><i class="fas fa-check"></i> All Premium Plan Features</li>
+                        <li><i class="fas fa-check"></i> Personalized Lesson Customization</li>
+                        <li><i class="fas fa-check"></i> Custom Book & Audio Integration</li>
+                        <li><i class="fas fa-check"></i> Customized Book Linking</li>
+                        <li><i class="fas fa-check"></i> Tailored Practice Tests</li>
+                        <li><i class="fas fa-check"></i> Dedicated Account Manager</li>
+                        <li><i class="fas fa-check"></i> Premium Content Updates</li>
+                        <li><i class="fas fa-check"></i> Advanced Analytics Dashboard</li>
+                        <li><i class="fas fa-check"></i> Exclusive Beta Features Access</li>
+                    </ul>
+                    <div class="plan-note highlight">
+                        <i class="fas fa-gem"></i>
+                        <p>
+                            Experience a fully customized TyporaX with tailored content, practice tests, and exclusive
+                            features designed for advanced learners and professionals.
+                            Base price starts from €50. To discuss your lesson content and subscribe, please contact
+                            <a href="mailto:typorax@gmail.com">typorax@gmail.com</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="/" class="btn-home"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+
+    <!-- Add particles.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Initialize particles.js with the provided configuration -->
+    <script>
+        // Initialize particles.js with enhanced visual effects
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: {
+                        value: 100,
+                        density: {
+                            enable: true,
+                            value_area: 1000
+                        }
+                    },
+                    color: {
+                        value: ["#4f46e5", "#6366f1", "#818cf8", "#a5b4fc", "#c7d2fe"]
+                    },
+                    shape: {
+                        type: ["circle", "triangle", "polygon"],
+                        stroke: {
+                            width: 0,
+                            color: "#000000"
+                        },
+                        polygon: {
+                            nb_sides: 6
+                        }
+                    },
+                    opacity: {
+                        value: 0.6,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 1,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 5,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 4,
+                            size_min: 0.5,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#4f46e5",
+                        opacity: 0.4,
+                        width: 1.5,
+                        shadow: {
+                            enable: true,
+                            color: "#6366f1",
+                            blur: 5
+                        }
+                    },
+                    move: {
+                        enable: true,
+                        speed: 3,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "bounce",
+                        bounce: true,
+                        attract: {
+                            enable: true,
+                            rotateX: 1200,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: "bubble"
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: "repulse"
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 180,
+                            line_linked: {
+                                opacity: 0.8
+                            }
+                        },
+                        bubble: {
+                            distance: 200,
+                            size: 12,
+                            duration: 2,
+                            opacity: 0.8,
+                            speed: 3
+                        },
+                        repulse: {
+                            distance: 200,
+                            duration: 0.4
+                        },
+                        push: {
+                            particles_nb: 4
+                        },
+                        remove: {
+                            particles_nb: 2
+                        }
+                    }
+                },
+                retina_detect: true,
+                fps_limit: 60,
+                background: {
+                    color: "transparent"
+                }
+            });
+
+            // Add a pulsating effect to the particles
+            let pulseDirection = 1;
+            let pulseSpeed = 0.02;
+            let minOpacity = 0.3;
+            let maxOpacity = 0.7;
+            let currentOpacity = 0.5;
+
+            // Apply pulsing effect to line opacity every 100ms
+            setInterval(() => {
+                if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+                    currentOpacity += pulseSpeed * pulseDirection;
+                    
+                    if (currentOpacity >= maxOpacity) {
+                        pulseDirection = -1;
+                    } else if (currentOpacity <= minOpacity) {
+                        pulseDirection = 1;
+                    }
+                    
+                    window.pJSDom[0].pJS.particles.line_linked.opacity = currentOpacity;
+                }
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>
