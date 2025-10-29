@@ -11,6 +11,8 @@ TyporaX is a powerful web-based markdown editor and language learning platform t
 
 **Try TyporaX now:** [https://typorax.onrender.com/](https://typorax.onrender.com/)
 
+**Test Account:** Username: `tester` | Password: `tester1234!`
+
 *The live deployment is running on Render and includes all the features described below.*
 
 ## ✨ Features
