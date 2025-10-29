@@ -20,6 +20,9 @@ import os
 import yaml
 import logging
 from flask import Flask, render_template, session
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_wtf.csrf import CSRFProtect
 from src.mail_config import mail  # Import shared mail instance
 from src.database import db  # Import db from database.py
 from dotenv import load_dotenv
@@ -37,6 +40,31 @@ app = Flask(__name__,
             template_folder='src/templates',
             static_folder='src/static',
             static_url_path='/static')
+
+# Initialize rate limiter
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    default_limits=["1000 per hour", "100 per minute"],
+    storage_uri="memory://",  # Use memory storage for development, Redis recommended for production
+    headers_enabled=True,  # Include rate limit headers in responses
+)
+
+# Define custom rate limit decorators
+def strict_rate_limit(limit_string):
+    """Apply strict rate limiting for sensitive endpoints"""
+    return limiter.limit(limit_string)
+
+def auth_rate_limit():
+    """Rate limiting for authentication endpoints"""
+    return limiter.limit("10 per minute, 50 per hour")
+
+def api_rate_limit():
+    """Rate limiting for API endpoints"""
+    return limiter.limit("200 per hour, 20 per minute")
+
+# Export limiter for use in blueprints
+app.limiter = limiter
 
 # Load config from YAML (keeping for backward compatibility, but email will use env vars)
 config_path = os.path.join(os.path.dirname(__file__), 'config.yaml')
@@ -83,6 +111,11 @@ with app.app_context():
 
 # App configuration
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'fallback_secret_key')
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'fallback_secret_key')
+
+# Initialize CSRF protection
+csrf = CSRFProtect(app)
+
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'src', 'static', 'img')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ARTIFACTS_DIR'] = os.path.join(
@@ -91,7 +124,6 @@ app.config['ARTIFACTS_DIR'] = os.path.join(
 # Session configuration
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
-app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'fallback_secret_key')
 
 # Email configuration - now using environment variables
 app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')

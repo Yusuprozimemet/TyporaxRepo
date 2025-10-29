@@ -40,19 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Define the callback function before initializing Google Sign-In
-    window.handleCredentialResponse = async function(response) {
+    window.handleCredentialResponse = async function (response) {
         if (!response.credential) {
             console.error('No credential in Google response');
             alert('Google Sign-In failed: No credential received.');
             return;
         }
-        
+
         const googleButton = document.querySelector('.g_id_signin');
         if (googleButton) {
             googleButton.style.opacity = '0.7';
             googleButton.style.pointerEvents = 'none';
         }
-        
+
         const loadingIndicator = document.createElement('div');
         loadingIndicator.id = 'google-loading';
         loadingIndicator.style.cssText = 'text-align: center; margin-top: 10px; color: #4f46e5; font-size: 14px;';
@@ -66,8 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Submit the credential to the backend using fetch
             const formData = new FormData();
             formData.append('id_token', response.credential);
-            
-            const loginResponse = await fetch('/auth/google-login', {
+
+            const loginResponse = await csrfFetch('/auth/google-login', {
                 method: 'POST',
                 body: formData
             });
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginResponse.ok) {
                 const result = await loginResponse.json();
                 console.log('Google login response:', result);
-                
+
                 // Handle redirect
                 if (result.redirect) {
                     console.log('Redirecting to:', result.redirect);
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 console.error('Google login failed:', loginResponse.status);
                 alert('Google Sign-In failed. Please try again.');
-                
+
                 // Reset button state
                 if (googleButton) {
                     googleButton.style.opacity = '1';
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error during Google login:', error);
             alert('Google Sign-In failed. Please check your connection and try again.');
-            
+
             // Reset button state
             if (googleButton) {
                 googleButton.style.opacity = '1';
@@ -116,13 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const initializeGoogleSignIn = async () => {
         try {
             await loadGoogleScript();
-            
+
             let clientId = null;
-            
+
             try {
                 // Try to fetch Google Client ID from backend
                 const response = await fetch('/auth/google-client-id');
-                
+
                 if (response.ok) {
                     const data = await response.json();
                     clientId = data.client_id;
@@ -133,16 +133,16 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (fetchError) {
                 console.warn('Failed to fetch Google Client ID from backend:', fetchError);
             }
-            
+
             // Fallback removed for security - Client ID must come from backend
             if (!clientId) {
                 throw new Error('Google Client ID not available from backend');
             }
-            
+
             if (!clientId) {
                 throw new Error('Google Client ID not available');
             }
-            
+
             google.accounts.id.initialize({
                 client_id: clientId,
                 callback: window.handleCredentialResponse
@@ -151,12 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
             renderGoogleSignInButton();
         } catch (error) {
             console.error('Google Sign-In initialization failed:', error);
-            
+
             // Check if it's an origin error
             if (error.message && error.message.includes('origin')) {
                 console.warn('Google OAuth origin not configured. Add http://127.0.0.1:5000 and http://localhost:5000 to your Google OAuth client authorized origins.');
             }
-            
+
             const container = document.getElementById('g_id_signin');
             if (container) {
                 container.innerHTML = `
@@ -221,15 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // GitHub Sign-In click handler
     const githubSigninBtn = document.getElementById('github-signin');
     if (githubSigninBtn) {
-        githubSigninBtn.addEventListener('click', function(e) {
+        githubSigninBtn.addEventListener('click', function (e) {
             e.preventDefault();
             console.log('GitHub Sign-In clicked');
-            
+
             // Show loading state
             githubSigninBtn.style.opacity = '0.7';
             githubSigninBtn.style.pointerEvents = 'none';
             githubSigninBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-            
+
             // Redirect to GitHub OAuth
             window.location.href = '/auth/github-login';
         });

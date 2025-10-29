@@ -56,6 +56,13 @@ def allowed_file(filename):
 @login_required
 def upload_image():
     """Upload an image to GCS or local filesystem, restricted to premium users."""
+    # Apply rate limiting for file uploads
+    limiter = current_app.limiter
+    try:
+        limiter.limit("10 per minute, 50 per hour")(lambda: None)()
+    except Exception:
+        return jsonify({'success': False, 'error': 'Too many upload requests. Please try again later.'}), 429
+    
     username = session.get('username')
     user = User.query.filter_by(username=username).first()
     if not user:

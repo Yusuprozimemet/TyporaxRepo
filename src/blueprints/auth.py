@@ -1,5 +1,7 @@
 # src/blueprints/auth.py
 from flask import Blueprint, request, redirect, url_for, flash, session, make_response, jsonify, current_app, render_template
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from src.database import db
 from src.models import User
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,6 +16,10 @@ import requests as http_requests
 from src.utils import generate_unique_username
 
 auth_bp = Blueprint('auth', __name__)
+
+# Get limiter instance (will be initialized from main app)
+def get_limiter():
+    return current_app.extensions.get('limiter')
 
 # Configuration from environment variables (loaded lazily to ensure dotenv is loaded)
 def get_config():
@@ -93,6 +99,16 @@ def register():
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    # Apply rate limiting for login attempts
+    limiter = current_app.limiter
+    if request.method == 'POST':
+        # More restrictive rate limiting for POST login attempts
+        try:
+            limiter.limit("5 per minute")(lambda: None)()
+        except Exception:
+            flash("Too many login attempts. Please try again later.", "error")
+            return redirect(url_for('index'))
+    
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -123,6 +139,13 @@ def login():
 
 @auth_bp.route('/google-login', methods=['POST'])
 def google_login():
+    # Apply rate limiting for OAuth login attempts
+    limiter = current_app.limiter
+    try:
+        limiter.limit("10 per minute")(lambda: None)()
+    except Exception:
+        return jsonify({"error": "Too many OAuth attempts. Please try again later."}), 429
+    
     token = request.form.get('id_token')
     logging.debug(f"Received id_token: {token}")
     if not token:
@@ -227,6 +250,14 @@ def reset_token(token):
 
 @auth_bp.route('/github-login')
 def github_login():
+    # Apply rate limiting for GitHub OAuth attempts
+    limiter = current_app.limiter
+    try:
+        limiter.limit("10 per minute")(lambda: None)()
+    except Exception:
+        flash("Too many OAuth attempts. Please try again later.", "error")
+        return redirect(url_for('index'))
+    
     config = get_config()
     callback_url = url_for('auth.github_callback', _external=True)
     logging.info(f"GitHub OAuth redirect URI: {callback_url}")

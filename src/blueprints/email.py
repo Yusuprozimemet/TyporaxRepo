@@ -8,6 +8,13 @@ email_bp = Blueprint('email', __name__)
 
 @email_bp.route('/send-email', methods=['POST'])
 def send_email_route():
+    # Apply strict rate limiting for email sending
+    limiter = current_app.limiter
+    try:
+        limiter.limit("3 per minute, 20 per hour")(lambda: None)()
+    except Exception:
+        return jsonify({'error': 'Too many email requests. Please try again later.'}), 429
+    
     data = request.get_json()
     recipient_email = data['recipientEmail']
     subject = data['subject']
