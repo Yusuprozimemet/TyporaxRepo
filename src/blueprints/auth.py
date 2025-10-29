@@ -34,9 +34,6 @@ def get_serializer():
     config = get_config()
     return URLSafeTimedSerializer(config['SERIALIZER_SECRET_KEY'])
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG)
-
 
 @auth_bp.route('/google-client-id', methods=['GET'])
 def get_google_client_id():

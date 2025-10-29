@@ -72,6 +72,9 @@ SERIALIZER_SECRET_KEY=your_secure_serializer_key
 MAIL_USERNAME=your_email@gmail.com
 MAIL_PASSWORD=your_app_password_here
 
+# Logging Configuration
+LOG_LEVEL=INFO  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+
 # Google Cloud (Optional)
 USE_GCS=false
 GCS_BUCKET=your_bucket_name

@@ -11,8 +11,6 @@ from functools import lru_cache
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import zipfile
 
-logging.basicConfig(level=logging.DEBUG)
-
 # Define paths
 ARTIFACTS_DIR = os.path.join(os.path.dirname(__file__), 'artifacts')
 PUBLISH_DIR_LOCAL = os.path.join(

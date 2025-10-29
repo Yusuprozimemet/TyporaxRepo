@@ -25,15 +25,17 @@ from flask_limiter.util import get_remote_address
 from flask_wtf.csrf import CSRFProtect
 from src.mail_config import mail  # Import shared mail instance
 from src.database import db  # Import db from database.py
+from src.logging_config import init_logging, get_logger
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
 # Initialize logging
-logging.basicConfig(level=logging.DEBUG)
-logging.getLogger('sqlalchemy.engine').setLevel(
-    logging.INFO)  # Enable SQLAlchemy logging
+init_logging()
+
+# Get logger for this module
+logger = get_logger(__name__)
 
 # Initialize Flask app
 app = Flask(__name__,
@@ -84,7 +86,7 @@ if database_url and database_url.startswith("postgres://"):
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url or 'sqlite:///' + \
     os.path.join(basedir, 'users.db').replace('\\', '/')
 # <-- Add this line
-logging.info(f"Database file path: {os.path.join(basedir, 'users.db')}")
+logger.info(f"Database file path: {os.path.join(basedir, 'users.db')}")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True  # Log SQL statements
 
@@ -98,14 +100,14 @@ db.init_app(app)
 with app.app_context():
     try:
         db.create_all()
-        logging.info("Database tables created or verified.")
+        logger.info("Database tables created or verified.")
         # Debug: List tables
         from sqlalchemy import inspect
         inspector = inspect(db.engine)
         tables = inspector.get_table_names()
-        logging.info(f"Tables in database after create_all: {tables}")
+        logger.info(f"Tables in database after create_all: {tables}")
     except Exception as e:
-        logging.error(f"Error creating database tables: {str(e)}")
+        logger.error(f"Error creating database tables: {str(e)}")
 
 # Import Blueprints
 
@@ -133,7 +135,7 @@ app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', '')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
 
 # Debug: Print email configuration (without password)
-logging.info(f"Email config - Server: {app.config['MAIL_SERVER']}, Port: {app.config['MAIL_PORT']}, TLS: {app.config['MAIL_USE_TLS']}, Username: {app.config['MAIL_USERNAME']}")
+logger.info(f"Email config - Server: {app.config['MAIL_SERVER']}, Port: {app.config['MAIL_PORT']}, TLS: {app.config['MAIL_USE_TLS']}, Username: {app.config['MAIL_USERNAME']}")
 
 # Initialize mail with the app
 mail.init_app(app)
@@ -141,13 +143,13 @@ mail.init_app(app)
 # Create upload folder if it doesn't exist
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-    logging.info(f"Created upload folder: {UPLOAD_FOLDER}")
+    logger.info(f"Created upload folder: {UPLOAD_FOLDER}")
 
 # Create published folder if it doesn't exist
 PUBLISH_DIR = os.path.join(os.path.dirname(__file__), 'data', 'published')
 if not os.path.exists(PUBLISH_DIR):
     os.makedirs(PUBLISH_DIR)
-    logging.info(f"Created publish folder: {PUBLISH_DIR}")
+    logger.info(f"Created publish folder: {PUBLISH_DIR}")
 
 # Register Blueprints
 app.register_blueprint(auth_bp, url_prefix='/auth')
@@ -174,7 +176,7 @@ app.register_blueprint(public_bp, url_prefix='/public')
 
 @app.route('/')
 def index():
-    logging.debug("Rendering index page")
+    logger.debug("Rendering index page")
     return render_template('index.html')
 
 
