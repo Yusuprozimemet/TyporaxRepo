@@ -7,6 +7,12 @@
 
 TyporaX is a powerful web-based markdown editor and language learning platform that combines modern writing tools with educational features. Built with Flask, it offers real-time editing, Google Cloud integration, authentication, and personalized learning experiences.
 
+## 🌐 Live Demo
+
+**Try TyporaX now:** [https://typorax.onrender.com/](https://typorax.onrender.com/)
+
+*The live deployment is running on Render and includes all the features described below.*
+
 ## ✨ Features
 
 - **Modern Markdown Editor** - Real-time preview with syntax highlighting
